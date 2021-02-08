@@ -24,4 +24,9 @@ class Pixel
     {
         return new self($point, $colour);
     }
+
+    public function getPoint(): Point
+    {
+        return $this->point;
+    }
 }
