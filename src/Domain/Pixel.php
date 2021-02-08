@@ -29,4 +29,9 @@ class Pixel
     {
         return $this->point;
     }
+
+    public function getColour(): Colour
+    {
+        return $this->colour;
+    }
 }
