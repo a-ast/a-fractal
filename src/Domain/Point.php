@@ -24,4 +24,14 @@ class Point
     {
         return new self($x, $y);
     }
+
+    public function getX(): int
+    {
+        return $this->x;
+    }
+
+    public function getY(): int
+    {
+        return $this->y;
+    }
 }
