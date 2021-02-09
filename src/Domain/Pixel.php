@@ -25,6 +25,11 @@ class Pixel
         return new self($point, $colour);
     }
 
+    public static function createFromCoordinatesAndColour(int $x, int $y, Colour $colour)
+    {
+        return new self(Point::create($x, $y), $colour);
+    }
+
     public function getPoint(): Point
     {
         return $this->point;
@@ -33,5 +38,10 @@ class Pixel
     public function getColour(): Colour
     {
         return $this->colour;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getPoint() . ' ' . $this->getColour();
     }
 }

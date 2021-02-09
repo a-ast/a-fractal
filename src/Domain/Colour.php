@@ -30,4 +30,24 @@ class Colour
     {
         return new self($r, $g, $b);
     }
+
+    public function getR(): int
+    {
+        return $this->r;
+    }
+
+    public function getG(): int
+    {
+        return $this->g;
+    }
+
+    public function getB(): int
+    {
+        return $this->b;
+    }
+
+    public function __toString(): string
+    {
+        return $this->r. '/' . $this->g . '/' . $this->b;
+    }
 }
