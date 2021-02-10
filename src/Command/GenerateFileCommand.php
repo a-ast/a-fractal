@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Domain\Canvas;
-use App\Domain\Fractal\Julia;
+use App\Domain\Fractal\Config;
+use App\Domain\Fractal\JuliaSet;
 use App\Infrastructure\Image;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,9 +25,9 @@ class GenerateFileCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $canvas = new Canvas(1000, 1000);
-        $fractal = new Julia();
-        $fractal->build($canvas);
+        $canvas = new Canvas(500, 500);
+        $fractal = new JuliaSet();
+        $fractal->build(new Config(), $canvas);
 
         $image = new Image($canvas);
         $image->saveToFile('var/z.png');
