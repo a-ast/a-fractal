@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Domain\Canvas;
+use App\Domain\Fractal\ColourStrategy;
+use App\Domain\Map;
 use App\Domain\Fractal\Config;
 use App\Domain\Fractal\JuliaSet;
 use App\Infrastructure\Image;
@@ -25,12 +26,16 @@ class GenerateFileCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $canvas = new Canvas(500, 500);
-        $fractal = new JuliaSet();
-        $fractal->build(new Config(), $canvas);
+        $map = new Map(500, 500);
 
-        $image = new Image($canvas);
-        $image->saveToFile('var/z.png');
+        $fractal = new JuliaSet();
+        $config = new Config();
+        $fractal->build($config, $map);
+
+        $colourStrategy = new ColourStrategy($config);
+
+        $image = new Image();
+        $image->saveToFile($map, 'var/z.png', $colourStrategy);
 
         return Command::SUCCESS;;
     }

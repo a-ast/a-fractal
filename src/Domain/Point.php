@@ -2,7 +2,7 @@
 
 namespace App\Domain;
 
-class Point
+trait Point
 {
     /**
      * @var int
@@ -13,17 +13,6 @@ class Point
      * @var int
      */
     private $y;
-
-    private function __construct(int $x, int $y)
-    {
-        $this->x = $x;
-        $this->y = $y;
-    }
-
-    public static function create(int $x, int $y)
-    {
-        return new self($x, $y);
-    }
 
     public function getX(): int
     {

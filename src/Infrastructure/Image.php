@@ -2,38 +2,30 @@
 
 namespace App\Infrastructure;
 
-use App\Domain\Canvas;
-use App\Domain\Pixel;
+use App\Domain\Fractal\ColourStrategy;
+use App\Domain\Map;
 
 class Image
 {
-    /**
-     * @var \App\Domain\Canvas
-     */
-    private $canvas;
-
-    public function __construct(Canvas $canvas)
+    public function saveToFile(Map $map, string $fileName, ColourStrategy $colourStrategy)
     {
-        $this->canvas = $canvas;
-    }
+        $file = imagecreatetruecolor($map->getWidth(), $map->getHeight());
 
-    public function saveToFile(string $fileName)
-    {
-        $file = imagecreatetruecolor($this->canvas->getWidth(), $this->canvas->getHeight());
-        //imagesetpixel($file, 1, 1, imagecolorallocate($file, 0, 0, 0));
+        /** @var \App\Domain\Fractal\Item $item */
+        foreach ($map->getItems() as $item) {
 
-        /** @var Pixel $pixel */
-        foreach ($this->canvas->getPixels() as $pixel) {
+            $colour = $colourStrategy->getColour($item);
 
-            $colour = imagecolorallocate($file,
-                $pixel->getColour()->getR(),
-                $pixel->getColour()->getG(),
-                $pixel->getColour()->getB()
+            $pixelColour = imagecolorallocate($file,
+                $colour->getR(),
+                $colour->getG(),
+                $colour->getB()
             );
+
             imagesetpixel($file,
-                $pixel->getPoint()->getX(),
-                $pixel->getPoint()->getY(),
-                $colour);
+                $item->getX(),
+                $item->getY(),
+                $pixelColour);
         }
 
         imagepng($file, $fileName);

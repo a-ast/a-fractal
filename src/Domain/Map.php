@@ -2,7 +2,7 @@
 
 namespace App\Domain;
 
-class Canvas
+class Map
 {
     /**
      * @var int
@@ -17,7 +17,7 @@ class Canvas
     /**
      * @var array[][]
      */
-    private $pixels = [];
+    private $items = [];
 
     public function __construct(int $width, int $height)
     {
@@ -25,9 +25,17 @@ class Canvas
         $this->height = $height;
     }
 
-    public function addPixel(Pixel $pixel): void
+    public function addItem(MapItem $item): void
     {
-        $this->pixels[] = $pixel;
+        $this->items[] = $item;
+    }
+
+    /**
+     * @return array<\App\Domain\MapItem>
+     */
+    public function getItems(): array
+    {
+        return $this->items;
     }
 
     public function getWidth(): int
@@ -38,13 +46,5 @@ class Canvas
     public function getHeight(): int
     {
         return $this->height;
-    }
-
-    /**
-     * @return array<\App\Domain\Pixel>
-     */
-    public function getPixels(): array
-    {
-        return $this->pixels;
     }
 }

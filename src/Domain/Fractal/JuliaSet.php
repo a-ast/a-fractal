@@ -2,22 +2,18 @@
 
 namespace App\Domain\Fractal;
 
-use App\Domain\Canvas;
-use App\Domain\Colour;
-use App\Domain\Pixel;
+use App\Domain\Map;
 
 class JuliaSet
 {
-    public function build(Config $config, Canvas $canvas)
+    public function build(Config $config, Map $map)
     {
-        $width = $canvas->getWidth();
-        $height = $canvas->getHeight();
+        $width = $map->getWidth();
+        $height = $map->getHeight();
 
         $widthFactor = 1.0 / ($width - 1);
         $heightFactor = 1.0 / ($height - 1);
         $limit = $config->getEscapeRadius() * $config->getEscapeRadius();
-
-        $colourFactor = 1 / log($config->getMaxIterations()) * 255;
 
         for ($i = 0; $i < $width; $i++) {
             for ($j = 0; $j < $height; $j++) {
@@ -44,14 +40,8 @@ class JuliaSet
                 if ($iteration >= $config->getMaxIterations()) {
                     continue;
                 }
-                $col1 = (int)((22*log($iteration) * $colourFactor) % 255);
-                $col2 = (int)((1.2 * $iteration) % $config->getMaxIterations());
-                $colour = Colour::createFromRGB(0, $col2, $col1);
 
-                $canvas->addPixel(
-                    Pixel::createFromCoordinatesAndColour($i, $j, $colour)
-                );
-
+                $map->addItem(Item::create($i, $j, $iteration));
             }
         }
     }
