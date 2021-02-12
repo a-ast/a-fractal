@@ -26,10 +26,16 @@ class Colour
         $this->b = $b;
     }
 
-    public static function createFromRGB(int $r, int $g, int $b)
+    public static function fromRGB(int $r, int $g, int $b): self
     {
         return new self($r, $g, $b);
     }
+
+    public static function noColour(): self
+    {
+        return new self(0, 0, 0);
+    }
+
 
     public function getR(): int
     {
