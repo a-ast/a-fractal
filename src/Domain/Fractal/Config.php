@@ -42,7 +42,7 @@ class Config
     /**
      * @var float
      */
-    private $escapeRadius = 2.0;
+    private $escapeRadius = 5.0;
 
     public function getReal(): float
     {
